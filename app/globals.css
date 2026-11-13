@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-ink: #07091a;
+  --color-raise: #0f1228;
+  --color-panel: #131729;
+  --color-line: #1e2440;
+  --color-fog: #eceaf8;
+  --color-mute: #7a80a8;
+  --color-violet: #7c5cfc;
+  --color-violet-soft: #9b80ff;
+  --color-amber: #ffb347;
+  --color-emerald: #34d399;
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; background: var(--color-ink); }
+body { @apply bg-ink font-sans text-fog antialiased; }
+::selection { background: color-mix(in oklab, var(--color-violet) 45%, transparent); }
+:focus-visible { outline: 2px solid var(--color-violet); outline-offset: 3px; border-radius: 4px; }
+section[id] { scroll-margin-top: 5rem; }
+
+/* ── Ambient hero glow ───────────────────────────────────────── */
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+.hero-glow::before {
+  content: "";
+  position: absolute;
+  top: -20%;
+  left: -10%;
+  width: 70%;
+  height: 70%;
+  background: radial-gradient(ellipse at center, color-mix(in oklab, var(--color-violet) 18%, transparent) 0%, transparent 70%);
+  filter: blur(60px);
+}
+.hero-glow::after {
+  content: "";
+  position: absolute;
+  top: 10%;
+  right: -15%;
+  width: 55%;
+  height: 55%;
+  background: radial-gradient(ellipse at center, color-mix(in oklab, #3b82f6 12%, transparent) 0%, transparent 70%);
+  filter: blur(80px);
+}
+
+/* ── Rise animation ──────────────────────────────────────────── */
+@keyframes rise { from { transform: translateY(108%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.rise { animation: rise 1s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* ── Fade-up for subtler elements ────────────────────────────── */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+.fade-up { animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* ── Preview swap ────────────────────────────────────────────── */
+@keyframes swap { from { opacity: 0; transform: scale(1.02); } to { opacity: 1; transform: none; } }
+.swap { animation: swap 0.35s ease-out both; }
+
+/* ── Tool card shimmer on hover ──────────────────────────────── */
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ── Dot pulse for open-to-work badge ────────────────────────── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+.pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+
+/* ── Nav active indicator ────────────────────────────────────── */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 60%;
+  height: 2px;
+  background: var(--color-violet);
+  border-radius: 2px;
+  transition: transform 0.2s ease;
+}
+.nav-link:hover::after { transform: translateX(-50%) scaleX(1); }
+
+/* ── Scrollbar ───────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-ink); }
+::-webkit-scrollbar-thumb { background: var(--color-line); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-mute); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .rise, .swap, .fade-up, .pulse-dot { animation: none; }
+}
