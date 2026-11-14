@@ -13,8 +13,18 @@ export interface Portfolio { profile: Profile; projects: Project[]; technologies
 
 const EMPTY: Portfolio = {
   profile: {
-    fullName: "", headline: "Building smart solutions.", bio: "", avatarUrl: null, cvUrl: null, githubUrl: "",
-    linkedinUrl: "", connectText: "", email: "", phone: "", location: "", openToWork: true,
+    fullName: "Supun Silva",
+    headline: "Building Smart Solutions.",
+    bio: "I'm Supun Silva, a full-stack developer passionate about building scalable web applications and AI-driven solutions. I focus on clean design, performance, and real-world problem solving.",
+    avatarUrl: null,
+    cvUrl: null,
+    githubUrl: "",
+    linkedinUrl: "",
+    connectText: "",
+    email: "",
+    phone: "",
+    location: "Sri Lanka",
+    openToWork: true,
   },
   projects: [],
   technologies: [],

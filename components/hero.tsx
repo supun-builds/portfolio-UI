@@ -8,31 +8,35 @@ interface HeroProps {
 
 export function Hero({ profile, technologies = [] }: HeroProps) {
   // Display name fallbacks
-  const fullName = profile.fullName?.trim() || "Kestroy Stephan";
-  const firstName = fullName.split(/\s+/)[0] || "Kestroy";
+  const fullName = profile.fullName?.trim() || "Supun Silva";
+  const firstName = fullName.split(/\s+/)[0] || "Supun";
 
-  // Location and timezone
+  // Location
   const location = (profile.location?.trim() || "Sri Lanka").toUpperCase();
-  const timezone = "GMT+5:30";
 
-  // Headline lines
-  let headlineL1 = `Hi, I'm ${firstName}.`;
-  let headlineL2 = "I build software";
-  let headlineL3 = "that ships.";
+  // Dynamic Headline parsing: default to "Building Smart Solutions."
+  const headline = profile.headline?.trim() || "Building Smart Solutions.";
+  let headlineL1 = "Building";
+  let headlineL2 = "Smart";
+  let headlineL3 = "Solutions.";
 
-  // If a custom headline is set that doesn't match default, adapt it gracefully
-  if (
-    profile.headline &&
-    profile.headline !== "Building smart solutions." &&
-    profile.headline !== "Building Smart Solutions."
-  ) {
-    const parts = profile.headline.trim().split(/\s+/);
-    if (parts.length >= 4) {
-      const mid = Math.ceil(parts.length / 2);
-      headlineL2 = parts.slice(0, mid).join(" ");
-      headlineL3 = parts.slice(mid).join(" ");
+  if (headline.toLowerCase() === "building smart solutions." || headline.toLowerCase() === "building smart solutions") {
+    headlineL1 = "Building";
+    headlineL2 = "Smart";
+    headlineL3 = "Solutions.";
+  } else {
+    const words = headline.split(/\s+/);
+    if (words.length >= 3) {
+      headlineL1 = words[0];
+      headlineL2 = words.slice(1, -1).join(" ");
+      headlineL3 = words[words.length - 1];
+    } else if (words.length === 2) {
+      headlineL1 = words[0];
+      headlineL2 = "";
+      headlineL3 = words[1];
     } else {
-      headlineL2 = profile.headline;
+      headlineL1 = headline;
+      headlineL2 = "";
       headlineL3 = "";
     }
   }
@@ -41,18 +45,12 @@ export function Hero({ profile, technologies = [] }: HeroProps) {
   const topTech =
     technologies.length > 0
       ? technologies.slice(0, 3).map((t) => t.name).join(", ").toUpperCase()
-      : "PYTHON, FLUTTER & REACT";
+      : "REACT, NEXT.JS & FLUTTER";
 
-  // Focus badge text
-  const focusText =
-    technologies.length >= 2
-      ? `${technologies[0].name} · ${technologies[1].name}`
-      : "Python backend · Applied AI";
-
-  // Bio description fallback to reference
+  // Bio description
   const bio =
     profile.bio?.trim() ||
-    "Most recently I built AgenticHR, an AI hiring platform, at Xaltrix. Before that I led CEYLO, my final-year travel app for Sri Lanka. I like Python backends, Flutter and React, and putting AI to work on problems people actually have.";
+    "I'm Supun Silva, a full-stack developer passionate about building scalable web applications and AI-driven solutions. I focus on clean design, performance, and real-world problem solving.";
 
   return (
     <section
@@ -77,18 +75,20 @@ export function Hero({ profile, technologies = [] }: HeroProps) {
               </div>
             )}
 
-            {/* Main Title */}
-            <h1 className="font-display text-4xl sm:text-6xl lg:text-[4.75rem] font-bold tracking-tight text-white leading-[1.08]">
+            {/* Main Title: Building Smart Solutions. */}
+            <h1 className="font-display text-5xl sm:text-7xl lg:text-[5.5rem] font-bold tracking-tight text-white leading-[0.98]">
               <span className="block">{headlineL1}</span>
-              <span className="block mt-1 text-[#38bdf8] drop-shadow-[0_0_35px_rgba(56,189,248,0.25)]">
-                {headlineL2}
-              </span>
-              {headlineL3 && <span className="block text-white">{headlineL3}</span>}
+              {headlineL2 && <span className="block">{headlineL2}</span>}
+              {headlineL3 && (
+                <span className="block text-[#7c5cfc] drop-shadow-[0_0_35px_rgba(124,92,252,0.35)]">
+                  {headlineL3}
+                </span>
+              )}
             </h1>
 
             {/* Sub-meta tags line */}
             <div className="text-[11px] sm:text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
-              SOFTWARE ENGINEER · {topTech} · {location}
+              FULL-STACK DEVELOPER · {topTech} · {location}
             </div>
 
             {/* Bio paragraph */}
@@ -100,7 +100,7 @@ export function Hero({ profile, technologies = [] }: HeroProps) {
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <a
                 href="#work"
-                className="inline-flex h-12 items-center justify-center rounded-xl bg-sky-500 px-7 font-medium text-white shadow-lg shadow-sky-500/25 transition-all hover:bg-sky-400 hover:shadow-sky-500/40 hover:-translate-y-0.5 active:translate-y-0"
+                className="inline-flex h-12 items-center justify-center rounded-xl bg-violet px-7 font-medium text-white shadow-lg shadow-violet/30 transition-all hover:bg-violet-soft hover:shadow-violet/50 hover:-translate-y-0.5 active:translate-y-0"
               >
                 View projects
               </a>
@@ -143,16 +143,6 @@ export function Hero({ profile, technologies = [] }: HeroProps) {
           {/* ── Right Column: Developer Photo Card ─────────────────────── */}
           <div className="flex justify-center lg:col-span-5 lg:justify-end">
             <div className="relative w-full max-w-[420px]">
-              {/* Overlapping Focus Glass Badge (Top Left) */}
-              <div className="absolute -left-3 -top-3 sm:-left-5 sm:-top-4 z-20 rounded-2xl border border-white/10 bg-[#0c101d]/95 px-4 py-2.5 shadow-2xl backdrop-blur-md">
-                <span className="block text-[9.5px] font-bold uppercase tracking-[0.2em] text-slate-400">
-                  FOCUS
-                </span>
-                <span className="mt-0.5 block text-xs sm:text-sm font-semibold text-white whitespace-nowrap">
-                  {focusText}
-                </span>
-              </div>
-
               {/* Overlapping Circular Rotating Stamp Badge (Top Right) */}
               <div className="absolute -right-4 -top-6 sm:-right-6 sm:-top-7 z-20 size-24 sm:size-28 select-none pointer-events-none">
                 <div className="relative size-full flex items-center justify-center">
@@ -169,7 +159,7 @@ export function Hero({ profile, technologies = [] }: HeroProps) {
                     </defs>
                     <text className="text-[8.5px] font-mono font-bold uppercase tracking-[0.22em] fill-slate-300">
                       <textPath href="#circle-badge-path" startOffset="0%">
-                        • OPEN TO WORK • SOFTWARE ENGINEER
+                        • OPEN TO WORK • FULL-STACK DEVELOPER
                       </textPath>
                     </text>
                   </svg>
@@ -184,7 +174,7 @@ export function Hero({ profile, technologies = [] }: HeroProps) {
               </div>
 
               {/* Main Card */}
-              <div className="relative overflow-hidden rounded-[2.2rem] border border-white/[0.08] bg-[#0c101d]/90 p-3 sm:p-3.5 shadow-2xl shadow-sky-950/30 backdrop-blur-xl">
+              <div className="relative overflow-hidden rounded-[2.2rem] border border-white/[0.08] bg-[#0c101d]/90 p-3 sm:p-3.5 shadow-2xl shadow-violet-950/30 backdrop-blur-xl">
                 {/* Image Frame */}
                 <div className="relative aspect-[3.9/4.8] w-full overflow-hidden rounded-[1.8rem] bg-gradient-to-b from-slate-800 to-slate-950">
                   {profile.avatarUrl ? (
@@ -192,21 +182,21 @@ export function Hero({ profile, technologies = [] }: HeroProps) {
                     <img
                       src={profile.avatarUrl}
                       alt={fullName}
-                      className="size-full object-cover object-top transition duration-500 hover:scale-[1.02]"
+                      className="size-full object-cover object-[center_35%] transition duration-500 hover:scale-[1.03]"
                     />
                   ) : (
                     /* Default stylized portrait presentation */
                     <div className="relative size-full flex flex-col items-center justify-center bg-gradient-to-b from-slate-800 via-slate-900 to-[#070a14] p-6 text-center">
-                      <div className="size-28 rounded-full border border-white/10 bg-slate-800/80 flex items-center justify-center shadow-inner mb-4">
-                        <span className="font-display text-4xl font-bold text-sky-400">
+                      <div className="size-28 rounded-full border border-violet/30 bg-violet/10 flex items-center justify-center shadow-inner mb-4 ring-2 ring-violet/20">
+                        <span className="font-display text-4xl font-bold text-violet">
                           {firstName[0]}
                         </span>
                       </div>
-                      <p className="text-sm font-medium text-slate-300">
+                      <p className="text-base font-semibold text-slate-200">
                         {fullName}
                       </p>
-                      <p className="text-xs text-slate-500 mt-1">
-                        Upload your photo in Admin Profile
+                      <p className="text-xs text-slate-400 mt-1">
+                        Full-stack Developer
                       </p>
                     </div>
                   )}
@@ -221,12 +211,12 @@ export function Hero({ profile, technologies = [] }: HeroProps) {
                         {fullName}
                       </h3>
                       <p className="text-xs sm:text-sm font-medium text-slate-400">
-                        Software Engineer
+                        Full-stack Developer
                       </p>
                     </div>
                     <div className="text-right">
                       <span className="inline-block text-[10.5px] sm:text-[11.5px] font-mono uppercase tracking-wider text-slate-400/90">
-                        {location} · {timezone}
+                        {location}
                       </span>
                     </div>
                   </div>
