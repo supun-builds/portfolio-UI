@@ -32,14 +32,20 @@ const EMPTY: Portfolio = {
 
 export function normalizeUrl(url: string | null | undefined): string | null {
   if (!url) return null;
-  const baseUrl = API_URL.trim().replace(/\/+$/, "");
+  let baseUrl = API_URL.trim().replace(/\/+$/, "");
+  if (baseUrl && !baseUrl.startsWith("http://") && !baseUrl.startsWith("https://")) {
+    baseUrl = `https://${baseUrl}`;
+  }
   // If backend returned localhost, swap it to the live API_URL
   if (url.startsWith("http://localhost:3000")) {
     return url.replace("http://localhost:3000", baseUrl);
   }
-  // If backend returned relative path /api/files/...
-  if (url.startsWith("/")) {
-    return `${baseUrl}${url}`;
+  // If URL was rendered without protocol (e.g. portfolio-backend-xxx.vercel.app/api/files/...)
+  if (!url.startsWith("http://") && !url.startsWith("https://")) {
+    if (url.startsWith("/")) {
+      return `${baseUrl}${url}`;
+    }
+    return `https://${url}`;
   }
   return url;
 }
