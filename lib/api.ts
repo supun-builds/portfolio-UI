@@ -30,12 +30,48 @@ const EMPTY: Portfolio = {
   technologies: [],
 };
 
+export function normalizeUrl(url: string | null | undefined): string | null {
+  if (!url) return null;
+  const baseUrl = API_URL.trim().replace(/\/+$/, "");
+  // If backend returned localhost, swap it to the live API_URL
+  if (url.startsWith("http://localhost:3000")) {
+    return url.replace("http://localhost:3000", baseUrl);
+  }
+  // If backend returned relative path /api/files/...
+  if (url.startsWith("/")) {
+    return `${baseUrl}${url}`;
+  }
+  return url;
+}
+
 // Revalidated every minute, so edits made in the admin show up without a redeploy.
 export async function getPortfolio(): Promise<Portfolio> {
   try {
     const res = await fetch(`${API_URL}/api/public/portfolio`, { next: { revalidate: 60 } });
     if (!res.ok) throw new Error(String(res.status));
-    return (await res.json()) as Portfolio;
+    const data = (await res.json()) as Portfolio;
+    return {
+      profile: {
+        ...data.profile,
+        avatarUrl: normalizeUrl(data.profile.avatarUrl),
+        cvUrl: normalizeUrl(data.profile.cvUrl),
+      },
+      technologies: (data.technologies ?? []).map((t) => ({
+        ...t,
+        logoUrl: normalizeUrl(t.logoUrl),
+      })),
+      projects: (data.projects ?? []).map((p) => ({
+        ...p,
+        images: (p.images ?? []).map((img) => ({
+          ...img,
+          url: normalizeUrl(img.url) ?? img.url,
+        })),
+        technologies: (p.technologies ?? []).map((t) => ({
+          ...t,
+          logoUrl: normalizeUrl(t.logoUrl),
+        })),
+      })),
+    };
   } catch {
     return EMPTY;
   }
