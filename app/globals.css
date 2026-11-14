@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@theme inline {
+@theme {
   --color-ink: #07091a;
   --color-raise: #0f1228;
   --color-panel: #131729;
@@ -16,7 +16,7 @@
 }
 
 html { scroll-behavior: smooth; background: var(--color-ink); }
-body { @apply bg-ink font-sans text-fog antialiased; }
+body { background: var(--color-ink); color: var(--color-fog); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
 ::selection { background: color-mix(in oklab, var(--color-violet) 45%, transparent); }
 :focus-visible { outline: 2px solid var(--color-violet); outline-offset: 3px; border-radius: 4px; }
 section[id] { scroll-margin-top: 5rem; }
