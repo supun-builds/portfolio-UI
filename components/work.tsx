@@ -5,8 +5,8 @@ import { WorkIndex } from "./work-index";
 export function Work({ projects }: { projects: Project[] }) {
   return (
     <section id="work" className="border-t border-line/60">
-      <div className="mx-auto w-full max-w-[88rem] px-5 py-24 md:px-10 md:py-32">
-        <div className="mb-14">
+      <div className="mx-auto w-full max-w-[88rem] px-5 py-10 md:px-10 md:py-16">
+        <div className="mb-8">
           <SectionTitle title="Selected work" count={projects.length} />
         </div>
         {projects.length ? (

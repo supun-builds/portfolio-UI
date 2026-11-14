@@ -27,23 +27,13 @@ function ProjectCard({ p }: { p: Project }) {
     <article className="group relative flex flex-col overflow-hidden rounded-2xl border border-line/70 bg-panel transition-all duration-300 hover:border-violet/40 hover:shadow-2xl hover:shadow-violet/10 hover:-translate-y-1">
 
       {/* ── Screenshot area ───────────────────────────── */}
-      <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-line/60 bg-raise">
-
-        {/* Browser chrome bar */}
-        <div className="absolute inset-x-0 top-0 z-10 flex items-center gap-1.5 bg-raise/90 px-3 py-2 backdrop-blur-sm">
-          <span className="size-2 rounded-full bg-line" />
-          <span className="size-2 rounded-full bg-line" />
-          <span className="size-2 rounded-full bg-line" />
-          <span className="ml-2 flex-1 truncate rounded-full bg-line/50 px-2.5 py-0.5 text-[10px] text-mute">
-            {p.liveUrl || `/${p.title.toLowerCase().replace(/\s+/g, "-")}`}
+      <div className="relative aspect-[4/3] w-full overflow-hidden border-b border-line/60 bg-raise">
+        {/* Image counter (if multiple) */}
+        {hasMultiple && (
+          <span className="absolute right-3 top-3 z-10 rounded-full bg-ink/75 px-2.5 py-0.5 text-[11px] font-medium text-mute backdrop-blur-md">
+            {shot + 1} / {p.images.length}
           </span>
-          {/* Image counter */}
-          {hasMultiple && (
-            <span className="shrink-0 rounded-full bg-line/60 px-2 py-0.5 text-[10px] text-mute">
-              {shot + 1} / {p.images.length}
-            </span>
-          )}
-        </div>
+        )}
 
         {/* Image */}
         {img ? (
@@ -114,19 +104,19 @@ function ProjectCard({ p }: { p: Project }) {
 
         {/* Featured badge */}
         {p.featured && (
-          <span className="absolute right-3 top-10 z-10 inline-flex items-center rounded-full bg-amber/20 border border-amber/30 px-2.5 py-0.5 text-xs font-medium text-amber backdrop-blur-sm">
+          <span className="absolute left-3 top-3 z-10 inline-flex items-center rounded-full bg-amber/20 border border-amber/30 px-2.5 py-0.5 text-xs font-medium text-amber backdrop-blur-sm">
             Featured
           </span>
         )}
       </div>
 
       {/* ── Card content ──────────────────────────────── */}
-      <div className="flex flex-1 flex-col gap-4 p-5 md:p-6">
+      <div className="flex flex-1 flex-col gap-3.5 p-4 sm:p-5">
         <div>
-          <h3 className="font-display text-xl font-bold tracking-tight text-fog md:text-2xl">
+          <h3 className="font-display text-lg font-bold tracking-tight text-fog md:text-xl">
             {p.title}
           </h3>
-          <p className="mt-2 text-sm leading-relaxed text-mute line-clamp-3">
+          <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-mute line-clamp-2">
             {p.description}
           </p>
         </div>
