@@ -14,7 +14,7 @@ export default async function Home() {
       <a href="#work" className="sr-only z-50 rounded-full bg-violet px-4 py-2 text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3">Skip to projects</a>
       <Nav profile={profile} />
       <main>
-        <Hero profile={profile} />
+        <Hero profile={profile} technologies={technologies} />
         <Tools technologies={technologies} />
         <Work projects={projects} />
         <Connect profile={profile} />
