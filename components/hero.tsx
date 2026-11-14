@@ -142,13 +142,17 @@ export function Hero({ profile, technologies = [] }: HeroProps) {
 
           {/* ── Right Column: Developer Photo Card ─────────────────────── */}
           <div className="flex justify-center lg:col-span-5 lg:justify-end">
-            <div className="relative w-full max-w-[420px]">
+            <div className="relative w-full max-w-[420px]" style={{ maxWidth: "420px" }}>
               {/* Overlapping Circular Rotating Stamp Badge (Top Right) */}
-              <div className="absolute -right-4 -top-6 sm:-right-6 sm:-top-7 z-20 size-24 sm:size-28 select-none pointer-events-none">
+              <div
+                className="absolute -right-4 -top-6 sm:-right-6 sm:-top-7 z-20 size-24 sm:size-28 select-none pointer-events-none"
+                style={{ width: "6.5rem", height: "6.5rem" }}
+              >
                 <div className="relative size-full flex items-center justify-center">
                   {/* Rotating SVG text */}
                   <svg
                     viewBox="0 0 100 100"
+                    style={{ width: "100%", height: "100%" }}
                     className="size-full animate-[spin_20s_linear_infinite]"
                   >
                     <defs>
@@ -182,6 +186,7 @@ export function Hero({ profile, technologies = [] }: HeroProps) {
                     <img
                       src={profile.avatarUrl}
                       alt={fullName}
+                      style={{ maxHeight: "520px" }}
                       className="size-full object-cover object-[center_35%] transition duration-500 hover:scale-[1.03]"
                     />
                   ) : (

@@ -43,6 +43,7 @@ function ProjectCard({ p }: { p: Project }) {
             src={img.url}
             alt={`${p.title} screenshot ${shot + 1}`}
             loading="lazy"
+            style={{ maxHeight: "360px" }}
             className="swap size-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
           />
         ) : (

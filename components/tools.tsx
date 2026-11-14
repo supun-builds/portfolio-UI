@@ -108,6 +108,9 @@ export function Tools({ technologies }: { technologies: Tech[] }) {
                     src={t.logoUrl}
                     alt=""
                     loading="lazy"
+                    width={40}
+                    height={40}
+                    style={{ width: "2.5rem", height: "2.5rem", maxWidth: "2.5rem", maxHeight: "2.5rem" }}
                     className="relative z-10 size-10 object-contain drop-shadow-lg transition-all duration-300 group-hover:scale-110"
                   />
                 ) : (

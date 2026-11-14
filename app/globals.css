@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@theme {
+@theme inline {
   --color-ink: #07091a;
   --color-raise: #0f1228;
   --color-panel: #131729;
