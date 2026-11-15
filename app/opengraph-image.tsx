@@ -105,13 +105,13 @@ export default async function Image() {
               marginTop: "8px",
             }}
           >
-            Full-Stack Developer · React, Next.js, Node.js · Sri Lanka
+            Full-Stack Developer · Next.js, Flutter, React · Sri Lanka
           </div>
         </div>
 
         {/* Bottom Bar: Tech Stack Chips */}
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          {["React", "Next.js", "Node.js", "MongoDB", "Tailwind CSS", "Flutter", "AI Solutions"].map(
+          {["Next.js", "Flutter", "React", "Node.js", "MongoDB", "Tailwind CSS", "AI Solutions"].map(
             (tech) => (
               <div
                 key={tech}

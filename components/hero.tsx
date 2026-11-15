@@ -42,10 +42,7 @@ export function Hero({ profile, technologies = [] }: HeroProps) {
   }
 
   // Tech stack summary
-  const topTech =
-    technologies.length > 0
-      ? technologies.slice(0, 3).map((t) => t.name).join(", ").toUpperCase()
-      : "REACT, NEXT.JS & FLUTTER";
+  const topTech = "NEXT JS, FLUTTER, REACT";
 
   // Bio description
   const bio =

@@ -45,8 +45,9 @@ export async function generateMetadata(): Promise<Metadata> {
       "Supun Silva",
       "Full-Stack Developer",
       "Software Engineer",
+      "Next.js Developer",
+      "Flutter Developer",
       "React Developer",
-      "Next.js Portfolio",
       "Node.js Developer",
       "Web Developer Sri Lanka",
       "AI Solutions Developer",
@@ -117,8 +118,8 @@ export default async function RootLayout({
 
   const techNames =
     technologies.length > 0
-      ? technologies.map((t) => t.name)
-      : ["React", "Next.js", "Node.js", "MongoDB", "Tailwind CSS", "Flutter"];
+      ? ["Next.js", "Flutter", "React", ...technologies.map((t) => t.name).filter((n) => !["Next.js", "Flutter", "React"].includes(n))]
+      : ["Next.js", "Flutter", "React", "Node.js", "MongoDB", "Tailwind CSS", "AI Solutions"];
 
   // Schema.org Structured Data (JSON-LD for Google Rich Search & Knowledge Graph)
   const jsonLd = {
