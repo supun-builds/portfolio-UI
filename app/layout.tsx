@@ -76,7 +76,7 @@ export async function generateMetadata(): Promise<Metadata> {
       gender: "male",
       images: [
         {
-          url: "/opengraph-image",
+          url: "/opengraph-image?v=2",
           width: 1200,
           height: 630,
           alt: `${name} - Full-Stack Developer Portfolio`,
@@ -88,7 +88,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title,
       description,
       creator: "@supunsilva",
-      images: ["/opengraph-image"],
+      images: ["/opengraph-image?v=2"],
     },
     robots: {
       index: true,
