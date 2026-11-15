@@ -29,10 +29,9 @@ export const viewport: Viewport = {
 export async function generateMetadata(): Promise<Metadata> {
   const { profile } = await getPortfolio();
   const name = profile.fullName || "Supun Silva";
-  const title = `${name} · Full-Stack Developer | Building Smart Solutions`;
+  const title = `${name} · Full-Stack Developer`;
   const description =
-    profile.bio ||
-    `${name} is a full-stack developer passionate about building scalable web applications and AI-driven solutions. Explore projects, technology stack, and contact information.`;
+    "Full-stack developer building scalable web applications and AI-driven solutions. Explore featured projects and contact info.";
 
   return {
     metadataBase: new URL(SITE_URL),
