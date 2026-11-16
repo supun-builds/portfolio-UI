@@ -329,7 +329,7 @@ function ResearchCard({ item }: { item: ResearchItem }) {
 
             {/* ── The Collage Grid: 1 Large Left Feature + 3 Stacked Right Tiles ── */}
             {currentSystemImg && (
-              <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.6fr_1fr] h-auto lg:h-[580px]">
+              <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.6fr_1fr] h-[520px] sm:h-[580px] lg:h-[620px]">
                 {/* 1. Large Main Featured Screen (Left - 60% Width) */}
                 <div
                   onClick={() =>
@@ -338,21 +338,23 @@ function ResearchCard({ item }: { item: ResearchItem }) {
                       title: `${item.title} — System Screen ${activeSystemIdx + 1}`,
                     })
                   }
-                  className="group/main relative flex h-[440px] sm:h-[500px] lg:h-full w-full cursor-pointer items-center justify-center overflow-hidden rounded-2xl border border-line/80 bg-ink/90 p-4 pb-14 shadow-2xl transition hover:border-sky-400/50"
+                  className="group/main relative h-full w-full cursor-pointer overflow-hidden rounded-2xl border border-line/80 bg-ink/90 shadow-2xl transition hover:border-sky-400/50"
                 >
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.08)_0%,transparent_75%)] pointer-events-none" />
 
-                  {/* Main Display Image - guaranteed 100% visible, zero cropping */}
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    key={currentSystemImg.url}
-                    src={currentSystemImg.url}
-                    alt={`Main Screen ${activeSystemIdx + 1}`}
-                    loading="lazy"
-                    className="max-h-full max-w-full object-contain transition-transform duration-500 group-hover/main:scale-[1.01]"
-                  />
+                  {/* Absolute Bounded Image Viewport: ZERO CROPPING, GUARANTEED 100% VISIBLE */}
+                  <div className="absolute inset-3 bottom-14 flex items-center justify-center overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      key={currentSystemImg.url}
+                      src={currentSystemImg.url}
+                      alt={`Main Screen ${activeSystemIdx + 1}`}
+                      loading="lazy"
+                      className="size-full object-contain transition-transform duration-500 group-hover/main:scale-[1.01]"
+                    />
+                  </div>
 
-                  {/* Badge & Zoom Overlay */}
+                  {/* Badge & Zoom Overlay at bottom */}
                   <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between pointer-events-none">
                     <span className="rounded-full border border-line/70 bg-ink/85 px-3 py-1 text-xs font-medium text-fog backdrop-blur-md">
                       Featured: Screen {activeSystemIdx + 1} of {systemImages.length}
@@ -364,37 +366,37 @@ function ResearchCard({ item }: { item: ResearchItem }) {
                   </div>
                 </div>
 
-                {/* 2. Stack of 3 Compact Tiles on the Right (fits 100% into view) */}
+                {/* 2. Stack of 3 Compact Tiles on the Right: EXACT 1/3 HEIGHT EACH, FITS 100% IN ONE VIEW */}
                 {secondaryImages.length > 0 ? (
-                  <div className="grid grid-cols-3 gap-2 h-28 sm:h-36 lg:grid-cols-1 lg:grid-rows-3 lg:h-full lg:gap-3">
+                  <div className="flex flex-row lg:flex-col gap-2.5 h-32 sm:h-40 lg:h-full w-full">
                     {secondaryImages.map((img) => {
                       const realIndex = systemImages.findIndex((orig) => orig.url === img.url);
                       return (
                         <div
                           key={img.url}
                           onClick={() => setActiveSystemIdx(realIndex)}
-                          className="group/tile relative h-full w-full cursor-pointer overflow-hidden rounded-xl border border-line/70 bg-ink/75 p-2 shadow-md transition-all duration-300 hover:border-sky-400/80 hover:bg-ink hover:scale-[1.01]"
+                          className="group/tile relative flex-1 min-h-0 min-w-0 w-full cursor-pointer overflow-hidden rounded-xl border border-line/70 bg-ink/75 shadow-md transition-all duration-300 hover:border-sky-400/80 hover:bg-ink hover:scale-[1.01]"
                         >
-                          {/* Thumbnail with object-contain */}
-                          <div className="relative flex size-full items-center justify-center overflow-hidden">
+                          {/* Bounded Thumbnail Viewport with object-contain */}
+                          <div className="absolute inset-2 flex items-center justify-center overflow-hidden">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
                               src={img.url}
                               alt={`System Screen ${realIndex + 1}`}
                               loading="lazy"
-                              className="max-h-full max-w-full object-contain rounded-lg transition-transform duration-300 group-hover/tile:scale-[1.02]"
+                              className="size-full object-contain rounded-lg transition-transform duration-300 group-hover/tile:scale-[1.02]"
                             />
                           </div>
 
                           {/* Hover action overlay */}
-                          <div className="absolute inset-0 flex items-center justify-center bg-black/45 opacity-0 backdrop-blur-[2px] transition-opacity group-hover/tile:opacity-100 rounded-xl">
-                            <span className="rounded-full border border-sky-400/40 bg-sky-400/20 px-2.5 py-0.5 text-[11px] font-semibold text-sky-200">
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 backdrop-blur-[2px] transition-opacity group-hover/tile:opacity-100 rounded-xl">
+                            <span className="rounded-full border border-sky-400/50 bg-sky-400/20 px-3 py-1 text-xs font-semibold text-sky-200">
                               View as main ↖
                             </span>
                           </div>
 
                           {/* Screen Index badge */}
-                          <span className="absolute top-1.5 left-1.5 rounded-md bg-black/80 px-1.5 py-0.5 font-mono text-[10px] text-fog/90 border border-line/50">
+                          <span className="absolute top-2 left-2 rounded-md bg-black/85 px-2 py-0.5 font-mono text-[11px] text-fog/90 border border-line/50">
                             #{realIndex + 1}
                           </span>
                         </div>
