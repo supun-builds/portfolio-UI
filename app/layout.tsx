@@ -29,9 +29,9 @@ export const viewport: Viewport = {
 export async function generateMetadata(): Promise<Metadata> {
   const { profile } = await getPortfolio();
   const name = profile.fullName || "Supun Silva";
-  const title = `${name} · Full-Stack Developer`;
-  const description =
-    "Full-stack developer building scalable web applications and AI-driven solutions. Explore featured projects and contact info.";
+  const title = `${name} | Software Engineer & Full-Stack Developer`;
+  const description = `${name} is a Software Engineer and Full-Stack Developer from Sri Lanka building scalable web apps, Flutter products and intelligent solutions.`;
+  const photoUrl = profile.avatarUrl || `${SITE_URL}/opengraph-image?v=2`;
 
   return {
     metadataBase: new URL(SITE_URL),
@@ -43,16 +43,14 @@ export async function generateMetadata(): Promise<Metadata> {
     keywords: [
       name,
       "Supun Silva",
-      "Full-Stack Developer",
       "Software Engineer",
+      "Full-Stack Developer",
       "Next.js Developer",
       "Flutter Developer",
       "React Developer",
       "Node.js Developer",
       "Web Developer Sri Lanka",
       "AI Solutions Developer",
-      "Frontend Developer",
-      "Backend Developer",
       "JavaScript",
       "TypeScript",
       "Tailwind CSS",
@@ -76,10 +74,10 @@ export async function generateMetadata(): Promise<Metadata> {
       gender: "male",
       images: [
         {
-          url: "/opengraph-image?v=2",
+          url: photoUrl,
           width: 1200,
           height: 630,
-          alt: `${name} - Full-Stack Developer Portfolio`,
+          alt: `${name} - Software Engineer & Full-Stack Developer`,
         },
       ],
     },
@@ -88,7 +86,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title,
       description,
       creator: "@supunsilva",
-      images: ["/opengraph-image?v=2"],
+      images: [photoUrl],
     },
     robots: {
       index: true,
@@ -102,6 +100,10 @@ export async function generateMetadata(): Promise<Metadata> {
       },
     },
     category: "technology",
+    other: {
+      thumbnail: photoUrl,
+      image_src: photoUrl,
+    },
   };
 }
 
@@ -114,14 +116,15 @@ export default async function RootLayout({
   const name = profile.fullName || "Supun Silva";
   const bio =
     profile.bio ||
-    "Full-stack developer passionate about building scalable web applications and AI-driven solutions.";
+    `${name} is a Software Engineer and Full-Stack Developer from Sri Lanka building scalable web apps, Flutter products and intelligent solutions.`;
+  const photoUrl = profile.avatarUrl || `${SITE_URL}/opengraph-image?v=2`;
 
   const techNames =
     technologies.length > 0
       ? ["Next.js", "Flutter", "React", ...technologies.map((t) => t.name).filter((n) => !["Next.js", "Flutter", "React"].includes(n))]
       : ["Next.js", "Flutter", "React", "Node.js", "MongoDB", "Tailwind CSS", "AI Solutions"];
 
-  // Schema.org Structured Data (JSON-LD for Google Rich Search & Knowledge Graph)
+  // Schema.org Structured Data (JSON-LD for Google Rich Search, Thumbnail & Knowledge Graph)
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -130,8 +133,12 @@ export default async function RootLayout({
         "@id": `${SITE_URL}/#person`,
         name: name,
         url: SITE_URL,
-        image: profile.avatarUrl || undefined,
-        jobTitle: "Full-Stack Developer",
+        image: {
+          "@type": "ImageObject",
+          url: photoUrl,
+          caption: `${name} - Software Engineer & Full-Stack Developer`,
+        },
+        jobTitle: "Software Engineer & Full-Stack Developer",
         description: bio,
         address: {
           "@type": "PostalAddress",
@@ -156,7 +163,11 @@ export default async function RootLayout({
         "@type": "ProfilePage",
         "@id": `${SITE_URL}/#profilepage`,
         url: SITE_URL,
-        name: `${name} - Full-Stack Developer Portfolio`,
+        name: `${name} | Software Engineer & Full-Stack Developer`,
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: photoUrl,
+        },
         mainEntity: { "@id": `${SITE_URL}/#person` },
       },
     ],
@@ -165,6 +176,8 @@ export default async function RootLayout({
   return (
     <html lang="en" className={`${bricolage.variable} ${instrument.variable}`}>
       <head>
+        <meta name="thumbnail" content={photoUrl} />
+        <link rel="image_src" href={photoUrl} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
