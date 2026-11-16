@@ -117,6 +117,9 @@ function ResearchCard({ item }: { item: ResearchItem }) {
     item.thesisUrl ||
     "https://drive.google.com/file/d/1hOhyevcBc3neNGb1mmdn3NgWQSJHhy5I/view?usp=sharing";
 
+  // Collage items: active item on left, other items on right stack
+  const secondaryImages = systemImages.filter((_, idx) => idx !== activeSystemIdx);
+
   return (
     <>
       <article className="group relative overflow-hidden rounded-3xl border border-line/70 bg-panel shadow-2xl transition-all duration-300 hover:border-violet/40 hover:shadow-violet/10">
@@ -182,7 +185,7 @@ function ResearchCard({ item }: { item: ResearchItem }) {
                   }}
                   className="font-medium text-sky-400 hover:text-sky-300 transition"
                 >
-                  View full showcase ↓
+                  View collage showcase ↓
                 </button>
               </div>
             )}
@@ -276,13 +279,13 @@ function ResearchCard({ item }: { item: ResearchItem }) {
           </div>
         </div>
 
-        {/* ── 2. Bottom Section: Full-Width System Prototype & Architecture Showcase ── */}
+        {/* ── 2. Bottom Section: Full-Width Collage of Images (Interactive 1-Large + 3-Stacked) ── */}
         {hasSystemImages && (
           <div
             id={`system-showcase-${item.id}`}
             className="border-t border-line/70 bg-raise/20 p-5 sm:p-8 lg:p-10"
           >
-            {/* Showcase Header */}
+            {/* Collage Header */}
             <div className="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
               <div>
                 <div className="flex items-center gap-2">
@@ -290,18 +293,18 @@ function ResearchCard({ item }: { item: ResearchItem }) {
                     <LayersIcon className="size-4" />
                   </span>
                   <h4 className="font-display text-lg font-bold text-fog md:text-xl">
-                    System Prototype &amp; Architecture Showcase
+                    System Prototype &amp; Architecture Collage
                   </h4>
                 </div>
                 <p className="mt-1 text-xs sm:text-sm text-mute">
-                  Interactive screens, mobile application prototype, and system architecture.
+                  Click any thumbnail on the right to focus, or click the main preview to view full size.
                 </p>
               </div>
 
-              {/* Slider Controls */}
+              {/* Navigation Counter & Buttons */}
               <div className="flex items-center gap-3">
                 <span className="font-mono text-xs text-mute">
-                  Screen <strong className="text-fog">{activeSystemIdx + 1}</strong> of {systemImages.length}
+                  Active Screen <strong className="text-fog">{activeSystemIdx + 1}</strong> of {systemImages.length}
                 </span>
                 <div className="flex items-center gap-1.5">
                   <button
@@ -324,9 +327,10 @@ function ResearchCard({ item }: { item: ResearchItem }) {
               </div>
             </div>
 
-            {/* Large Canvas Viewport with ZERO Cropping (object-contain on sleek dark stage) */}
+            {/* ── The Collage Grid: 1 Large Left Feature + 3 Stacked Right Tiles ── */}
             {currentSystemImg && (
-              <div className="space-y-4">
+              <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.6fr_1fr] h-auto lg:h-[600px]">
+                {/* 1. Large Main Featured Screen (Left - 60% Width) */}
                 <div
                   onClick={() =>
                     setModalImg({
@@ -334,54 +338,24 @@ function ResearchCard({ item }: { item: ResearchItem }) {
                       title: `${item.title} — System Screen ${activeSystemIdx + 1}`,
                     })
                   }
-                  className="group/viewer relative flex h-[380px] sm:h-[480px] lg:h-[560px] w-full cursor-pointer items-center justify-center overflow-hidden rounded-2xl border border-line/70 bg-ink/90 shadow-2xl transition hover:border-sky-400/50"
+                  className="group/main relative flex h-[380px] sm:h-[480px] lg:h-full w-full cursor-pointer items-center justify-center overflow-hidden rounded-2xl border border-line/80 bg-ink/90 shadow-2xl transition hover:border-sky-400/50"
                 >
-                  {/* Subtle radial ambient glow behind image */}
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.08)_0%,transparent_70%)] pointer-events-none" />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.08)_0%,transparent_75%)] pointer-events-none" />
 
-                  {/* Main Display Image - object-contain ensures NOTHING is cropped */}
+                  {/* Main Display Image - object-contain ensures ZERO cropping of mobile UI */}
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     key={currentSystemImg.url}
                     src={currentSystemImg.url}
-                    alt={`System Prototype Screen ${activeSystemIdx + 1}`}
+                    alt={`Main Screen ${activeSystemIdx + 1}`}
                     loading="lazy"
-                    className="max-h-full max-w-full object-contain p-3 sm:p-5 transition-transform duration-500 group-hover/viewer:scale-[1.01]"
+                    className="size-full object-contain p-3 sm:p-5 transition-transform duration-500 group-hover/main:scale-[1.01]"
                   />
 
-                  {/* Prev / Next Click Zones on sides */}
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      prevSystem();
-                    }}
-                    aria-label="Previous image"
-                    className="absolute inset-y-0 left-0 z-10 flex w-16 items-center justify-center opacity-0 transition-opacity group-hover/viewer:opacity-100"
-                  >
-                    <span className="flex size-9 items-center justify-center rounded-full bg-ink/80 text-fog border border-line/60 backdrop-blur transition hover:bg-violet hover:text-white">
-                      <ChevronLeftIcon className="size-4" />
-                    </span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      nextSystem();
-                    }}
-                    aria-label="Next image"
-                    className="absolute inset-y-0 right-0 z-10 flex w-16 items-center justify-center opacity-0 transition-opacity group-hover/viewer:opacity-100"
-                  >
-                    <span className="flex size-9 items-center justify-center rounded-full bg-ink/80 text-fog border border-line/60 backdrop-blur transition hover:bg-violet hover:text-white">
-                      <ChevronRightIcon className="size-4" />
-                    </span>
-                  </button>
-
-                  {/* Screen label & Click-to-Zoom Badge */}
+                  {/* Badge & Zoom Overlay */}
                   <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between pointer-events-none">
                     <span className="rounded-full border border-line/70 bg-ink/85 px-3 py-1 text-xs font-medium text-fog backdrop-blur-md">
-                      System Screen {activeSystemIdx + 1} of {systemImages.length}
+                      Featured: Screen {activeSystemIdx + 1}
                     </span>
                     <span className="flex items-center gap-1.5 rounded-full border border-line/70 bg-ink/85 px-3 py-1 text-xs font-medium text-sky-300 backdrop-blur-md">
                       <MaximizeIcon className="size-3" />
@@ -390,33 +364,42 @@ function ResearchCard({ item }: { item: ResearchItem }) {
                   </div>
                 </div>
 
-                {/* Horizontal Thumbnails Strip */}
-                {systemImages.length > 1 && (
-                  <div className="flex items-center gap-3 overflow-x-auto pb-2 pt-1 scrollbar-thin scrollbar-thumb-line">
-                    {systemImages.map((img, i) => (
-                      <button
-                        key={img.url}
-                        type="button"
-                        onClick={() => setActiveSystemIdx(i)}
-                        className={`relative h-20 w-32 shrink-0 overflow-hidden rounded-xl border transition-all ${
-                          activeSystemIdx === i
-                            ? "border-sky-400 ring-2 ring-sky-400/40 shadow-lg scale-[1.03]"
-                            : "border-line/60 opacity-60 hover:opacity-100 hover:border-line"
-                        }`}
-                      >
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={img.url}
-                          alt={`Thumbnail ${i + 1}`}
-                          className="size-full object-cover object-top"
-                        />
-                        <span className="absolute bottom-1 right-1 rounded bg-black/80 px-1.5 py-0.5 text-[10px] font-mono text-white">
-                          #{i + 1}
-                        </span>
-                      </button>
-                    ))}
+                {/* 2. Stack of 3 Tiles on the Right (as sketched) */}
+                {secondaryImages.length > 0 ? (
+                  <div className="flex flex-col gap-3 h-full">
+                    {secondaryImages.map((img) => {
+                      const realIndex = systemImages.findIndex((orig) => orig.url === img.url);
+                      return (
+                        <div
+                          key={img.url}
+                          onClick={() => setActiveSystemIdx(realIndex)}
+                          className="group/tile relative flex-1 min-h-[140px] lg:min-h-0 w-full cursor-pointer overflow-hidden rounded-xl border border-line/70 bg-ink/70 p-2 shadow-md transition-all duration-300 hover:border-sky-400/80 hover:bg-ink hover:shadow-sky-400/10 hover:scale-[1.01]"
+                        >
+                          {/* Thumbnail with object-contain so phone mockups remain visible */}
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={img.url}
+                            alt={`System Screen ${realIndex + 1}`}
+                            loading="lazy"
+                            className="size-full object-contain rounded-lg transition-transform duration-300 group-hover/tile:scale-[1.02]"
+                          />
+
+                          {/* Hover action overlay */}
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 backdrop-blur-[2px] transition-opacity group-hover/tile:opacity-100 rounded-xl">
+                            <span className="rounded-full border border-sky-400/40 bg-sky-400/20 px-3 py-1 text-xs font-semibold text-sky-200">
+                              Click to view as main ↖
+                            </span>
+                          </div>
+
+                          {/* Screen Index badge */}
+                          <span className="absolute top-2 left-2 rounded-md bg-black/75 px-2 py-0.5 font-mono text-[11px] text-fog/90 border border-line/50">
+                            Screen #{realIndex + 1}
+                          </span>
+                        </div>
+                      );
+                    })}
                   </div>
-                )}
+                ) : null}
               </div>
             )}
           </div>
