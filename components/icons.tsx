@@ -13,3 +13,8 @@ export const DownloadIcon = (p: P) => (<svg {...base} {...stroke} {...p}><path d
 export const ExternalIcon = (p: P) => (<svg {...base} {...stroke} {...p}><path d="M7 17 17 7M9 7h8v8" /></svg>);
 export const BookOpenIcon = (p: P) => (<svg {...base} {...stroke} {...p}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>);
 export const PencilIcon = (p: P) => (<svg {...base} {...stroke} {...p}><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>);
+export const ChevronLeftIcon = (p: P) => (<svg {...base} {...stroke} {...p}><path d="m15 18-6-6 6-6"/></svg>);
+export const ChevronRightIcon = (p: P) => (<svg {...base} {...stroke} {...p}><path d="m9 18 6-6-6-6"/></svg>);
+export const LayersIcon = (p: P) => (<svg {...base} {...stroke} {...p}><path d="m12 2 10 5-10 5-10-5 10-5z"/><path d="m2 12 10 5 10-5"/><path d="m2 17 10 5 10-5"/></svg>);
+export const MaximizeIcon = (p: P) => (<svg {...base} {...stroke} {...p}><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>);
+export const XIcon = (p: P) => (<svg {...base} {...stroke} {...p}><path d="M18 6 6 18M6 6l12 12"/></svg>);
