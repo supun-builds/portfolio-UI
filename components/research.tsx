@@ -123,70 +123,67 @@ function ResearchCard({ item }: { item: ResearchItem }) {
         {/* ── 1. Top Section: Thesis Photo & Academic Dissertation Details ── */}
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.35fr]">
           {/* Left Column: Thesis Hardbound Book Photo */}
-          <div className="flex flex-col justify-between border-b border-line/60 bg-raise/40 p-5 sm:p-7 lg:border-b-0 lg:border-r">
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-xs text-mute">
-                <span className="flex items-center gap-1.5 font-semibold text-fog/90">
-                  <BookOpenIcon className="size-3.5 text-violet-soft" />
-                  <span>Dissertation &amp; Thesis Book</span>
-                </span>
-                <span className="font-mono text-[11px] text-mute/80">Physical Copy</span>
-              </div>
+          <div className="flex flex-col border-b border-line/60 bg-raise/40 p-5 sm:p-7 lg:border-b-0 lg:border-r">
+            <div className="mb-2.5 flex items-center justify-between text-xs text-mute">
+              <span className="flex items-center gap-1.5 font-semibold text-fog/90">
+                <BookOpenIcon className="size-3.5 text-violet-soft" />
+                <span>Dissertation &amp; Thesis Book</span>
+              </span>
+              <span className="font-mono text-[11px] text-mute/80">Physical Copy</span>
+            </div>
 
-              <div
-                onClick={() =>
-                  item.coverImageUrl &&
-                  setModalImg({ url: item.coverImageUrl, title: `${item.title} — Thesis Book` })
-                }
-                className={`group/book relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/3] w-full overflow-hidden rounded-2xl border border-line/70 bg-ink ${
-                  item.coverImageUrl ? "cursor-pointer" : ""
-                }`}
-              >
-                {item.coverImageUrl ? (
-                  <>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={item.coverImageUrl}
-                      alt={`${item.title} - Thesis Book`}
-                      loading="lazy"
-                      className="size-full object-cover object-center transition-transform duration-500 group-hover/book:scale-[1.03]"
-                    />
-                    {/* Badge on photo */}
-                    <span className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-full border border-line/60 bg-ink/85 px-3 py-1 text-xs font-medium text-fog backdrop-blur-md">
-                      <BookOpenIcon className="size-3 text-violet-soft" />
-                      <span>Thesis Book</span>
-                    </span>
-                    <span className="absolute top-3 right-3 flex size-8 items-center justify-center rounded-full bg-ink/80 text-fog opacity-0 backdrop-blur-md transition-opacity group-hover/book:opacity-100">
-                      <MaximizeIcon className="size-4" />
-                    </span>
-                  </>
-                ) : (
-                  <div className="flex size-full flex-col items-center justify-center gap-2 p-6 text-center text-mute">
-                    <BookOpenIcon className="size-12 text-line" />
-                    <span className="text-xs font-mono uppercase tracking-wider">
-                      Thesis Book Photo
-                    </span>
-                  </div>
-                )}
-              </div>
+            <div
+              onClick={() =>
+                item.coverImageUrl &&
+                setModalImg({ url: item.coverImageUrl, title: `${item.title} — Thesis Book` })
+              }
+              className={`group/book relative flex-1 w-full min-h-[380px] sm:min-h-[460px] lg:min-h-[500px] overflow-hidden rounded-2xl border border-line/70 bg-ink ${
+                item.coverImageUrl ? "cursor-pointer" : ""
+              }`}
+            >
+              {item.coverImageUrl ? (
+                <>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={item.coverImageUrl}
+                    alt={`${item.title} - Thesis Book`}
+                    loading="lazy"
+                    className="size-full object-cover object-center transition-transform duration-500 group-hover/book:scale-[1.03]"
+                  />
+                  {/* Badge on photo */}
+                  <span className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-full border border-line/60 bg-ink/85 px-3 py-1 text-xs font-medium text-fog backdrop-blur-md">
+                    <BookOpenIcon className="size-3 text-violet-soft" />
+                    <span>Thesis Book</span>
+                  </span>
+                  <span className="absolute top-3 right-3 flex size-8 items-center justify-center rounded-full bg-ink/80 text-fog opacity-0 backdrop-blur-md transition-opacity group-hover/book:opacity-100">
+                    <MaximizeIcon className="size-4" />
+                  </span>
+                </>
+              ) : (
+                <div className="flex size-full flex-col items-center justify-center gap-2 p-6 text-center text-mute">
+                  <BookOpenIcon className="size-12 text-line" />
+                  <span className="text-xs font-mono uppercase tracking-wider">
+                    Thesis Book Photo
+                  </span>
+                </div>
+              )}
             </div>
 
             {hasSystemImages && (
-              <div className="mt-4 flex items-center justify-between rounded-xl border border-line/60 bg-panel/80 px-3.5 py-2.5 text-xs text-mute">
+              <div className="mt-3 flex items-center justify-between rounded-xl border border-line/60 bg-panel/80 px-3.5 py-2.5 text-xs text-mute">
                 <span className="flex items-center gap-2 text-fog font-medium">
                   <LayersIcon className="size-4 text-sky-400" />
                   <span>{systemImages.length} System Screens Available</span>
                 </span>
-                <a
-                  href="#system-showcase"
-                  onClick={(e) => {
-                    e.preventDefault();
+                <button
+                  type="button"
+                  onClick={() => {
                     document.getElementById(`system-showcase-${item.id}`)?.scrollIntoView({ behavior: "smooth" });
                   }}
                   className="font-medium text-sky-400 hover:text-sky-300 transition"
                 >
                   View full showcase ↓
-                </a>
+                </button>
               </div>
             )}
           </div>
