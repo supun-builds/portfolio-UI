@@ -5,11 +5,28 @@ export interface Project {
   id: string; title: string; description: string; githubUrl: string; liveUrl: string;
   images: { id: string; url: string }[]; technologies: Tech[]; featured: boolean;
 }
+export interface ResearchItem {
+  id: string;
+  title: string;
+  badge: string;
+  authors: string;
+  description: string;
+  coverImageUrl: string | null;
+  images: { id: string; url: string }[];
+  thesisUrl: string;
+  paperUrl: string;
+  projectUrl: string;
+  githubUrl: string;
+  featured: boolean;
+  order: number;
+}
 export interface Profile {
   fullName: string; headline: string; bio: string; avatarUrl: string | null; cvUrl: string | null;
-  githubUrl: string; linkedinUrl: string; connectText: string; email: string; phone: string; location: string; openToWork: boolean;
+  githubUrl: string; linkedinUrl: string;
+  researchSubtitle?: string; researchGateUrl?: string; mediumUrl?: string;
+  connectText: string; email: string; phone: string; location: string; openToWork: boolean;
 }
-export interface Portfolio { profile: Profile; projects: Project[]; technologies: Tech[] }
+export interface Portfolio { profile: Profile; projects: Project[]; technologies: Tech[]; research: ResearchItem[] }
 
 const EMPTY: Portfolio = {
   profile: {
@@ -20,6 +37,9 @@ const EMPTY: Portfolio = {
     cvUrl: null,
     githubUrl: "",
     linkedinUrl: "",
+    researchSubtitle: "My final-year thesis, two extended abstracts published at HIRS 2025, and the guides I write on Medium.",
+    researchGateUrl: "",
+    mediumUrl: "",
     connectText: "",
     email: "",
     phone: "",
@@ -28,6 +48,24 @@ const EMPTY: Portfolio = {
   },
   projects: [],
   technologies: [],
+  research: [
+    {
+      id: "default-thesis",
+      title: "An AI-Powered Guide for Sustainable Eco & Cultural Tourism in Sri Lanka",
+      badge: "🎓 Final-year thesis · October 2026",
+      authors: "Supun Silva · BSc (Hons) Information Technology · Faculty of Information Technology, Horizon Campus",
+      description:
+        "My final-year dissertation, written around CEYLO: the research, design, AI models and user testing behind a mobile guide that helps travellers explore Sri Lanka sustainably and safely.",
+      coverImageUrl: null,
+      images: [],
+      thesisUrl: "https://drive.google.com/file/d/1hOhyevcBc3neNGb1mmdn3NgWQSJHhy5I/view?usp=sharing",
+      paperUrl: "",
+      projectUrl: "",
+      githubUrl: "",
+      featured: true,
+      order: 0,
+    },
+  ],
 };
 
 export function normalizeUrl(url: string | null | undefined): string | null {
@@ -77,6 +115,17 @@ export async function getPortfolio(): Promise<Portfolio> {
           logoUrl: normalizeUrl(t.logoUrl),
         })),
       })),
+      research:
+        data.research && data.research.length > 0
+          ? data.research.map((r) => ({
+              ...r,
+              coverImageUrl: normalizeUrl(r.coverImageUrl),
+              images: (r.images ?? []).map((img) => ({
+                ...img,
+                url: normalizeUrl(img.url) ?? img.url,
+              })),
+            }))
+          : EMPTY.research,
     };
   } catch {
     return EMPTY;

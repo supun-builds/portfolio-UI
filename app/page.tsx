@@ -2,13 +2,14 @@ import { getPortfolio } from "@/lib/api";
 import { Connect } from "@/components/connect";
 import { Hero } from "@/components/hero";
 import { Nav } from "@/components/nav";
+import { Research } from "@/components/research";
 import { Tools } from "@/components/tools";
 import { Work } from "@/components/work";
 
 export const revalidate = 60;
 
 export default async function Home() {
-  const { profile, projects, technologies } = await getPortfolio();
+  const { profile, projects, technologies, research } = await getPortfolio();
   return (
     <>
       <a href="#work" className="sr-only z-50 rounded-full bg-violet px-4 py-2 text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3">Skip to projects</a>
@@ -17,6 +18,7 @@ export default async function Home() {
         <Hero profile={profile} technologies={technologies} />
         <Tools technologies={technologies} />
         <Work projects={projects} />
+        <Research research={research} profile={profile} />
         <Connect profile={profile} />
       </main>
       <footer className="border-t border-line/50">

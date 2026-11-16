@@ -11,3 +11,5 @@ export const LinkedinIcon = (p: P) => (
 const stroke = { fill: "none", stroke: "currentColor", strokeWidth: 1.8, strokeLinecap: "round", strokeLinejoin: "round" } as const;
 export const DownloadIcon = (p: P) => (<svg {...base} {...stroke} {...p}><path d="M12 3v12m0 0-4-4m4 4 4-4M4 19h16" /></svg>);
 export const ExternalIcon = (p: P) => (<svg {...base} {...stroke} {...p}><path d="M7 17 17 7M9 7h8v8" /></svg>);
+export const BookOpenIcon = (p: P) => (<svg {...base} {...stroke} {...p}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>);
+export const PencilIcon = (p: P) => (<svg {...base} {...stroke} {...p}><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>);

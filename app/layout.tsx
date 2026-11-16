@@ -137,7 +137,12 @@ export default async function RootLayout({
           "@type": "PostalAddress",
           addressCountry: "Sri Lanka",
         },
-        sameAs: [profile.githubUrl, profile.linkedinUrl].filter(Boolean),
+        sameAs: [
+          profile.githubUrl,
+          profile.linkedinUrl,
+          profile.researchGateUrl,
+          profile.mediumUrl,
+        ].filter(Boolean),
         knowsAbout: techNames,
       },
       {

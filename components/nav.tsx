@@ -1,7 +1,12 @@
 import type { Profile } from "@/lib/api";
 
 export function Nav({ profile }: { profile: Profile }) {
-  const links = [["Tools", "#tools"], ["Work", "#work"], ["Connect", "#connect"]];
+  const links = [
+    ["Tools", "#tools"],
+    ["Work", "#work"],
+    ["Research", "#research"],
+    ["Connect", "#connect"],
+  ];
   return (
     <header className="sticky top-0 z-30 border-b border-line/50 bg-ink/75 backdrop-blur-xl">
       <div className="mx-auto flex h-16 w-full max-w-[88rem] items-center justify-between px-5 md:px-10">
